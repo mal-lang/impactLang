@@ -15,14 +15,15 @@
  */
 
 category main {
-asset sysImpact extends System
-developer info: "This is the system asset from coreLang. I have only written down what needs to be added to coreLang to realize the impactLang. A similar extension could be done for other assets. I think most possibly Data and/or Information." 
+asset SystemImpact extends System
+developer info: "This is the system asset from coreLang. I have only written down what needs to be added to coreLang to realize the impactLang. Depending on the use case, a better design is however probably to write this extension code in the system asset rather than extending like this. A similar extension could be done for other assets. I think most possibly Data and/or Information." 
 {
 | fullAccess
  +> leadsTo[ORimpact].oRrealized, 
  	leadsTo[ANDimpact].aNDrealized
 }
-asset sigImpact extends Signal
+asset SignalImpact extends Signal
+developer info: "This is the system asset from icsLang. I have only written down what needs to be added to icsLang to realize the impactLang. Depending on the use case, a better design is however probably to write this extension code in the signal asset rather than extending like this. A similar extension could be done for other assets. I think most possibly Data and/or Information."
 {
 	| manipulateSignal
  		+> leadsTo[ORimpact].oRrealized, 
@@ -45,10 +46,12 @@ asset ANDimpact extends Impact{
  -> parent[ORimpact].oRrealized, 
  	parent[ANDimpact].aNDrealized
 }
-	}
+
+}
+
 associations {
 	Impact [parent] * <--aggregation--> * [child] Impact
  	developer info: "Impacts can be arbitrarily aggregated and combined, similar to fault trees"
-	System [cause] * <--consequence--> * [leadsTo] Impact
-	Signal [signal] * <--consequence--> * [leadsTo] Impact
+	SystemImpact [sysCause] * <--consequence--> * [leadsTo] Impact
+	SignalImpact [sigCause] * <--consequence--> * [leadsTo] Impact
 }
